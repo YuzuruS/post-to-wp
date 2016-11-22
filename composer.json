@@ -1,0 +1,34 @@
+{
+  "name": "yuzuru-s/post-to-wp",
+  "description": "Wrapping Redis's sorted set APIs for specializing recommending operations.",
+  "keywords": ["wordpress", "post", "image"],
+  "homepage": "https://github.com/YuzuruS/post-to-wp",
+  "type": "library",
+  "license": "MIT",
+  "repositories" : [
+    {
+      "type" : "pear",
+      "url" : "https://pear.php.net"
+    }
+  ],
+  "require" : {
+    "php": ">=5.5.0",
+    "ext-xmlrpc": "*",
+    "pear-pear.php.net/XML_RPC": "*"
+  },
+  "authors": [
+    {
+      "name": "Yuzuru Suzuki",
+      "email": "navitima@gmail.com",
+      "homepage": "http://yuzurus.hatenablog.jp/"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*@stable",
+    "satooshi/php-coveralls": "dev-master",
+    "friendsofphp/php-cs-fixer": "0.3.*@dev"
+  },
+  "autoload": {
+    "psr-0": {"YuzuruS": "src/"}
+  }
+}
