@@ -1,0 +1,2 @@
+repo_token: REPO_TOKEN
+coverage_clover: build/logs/clover.xml
