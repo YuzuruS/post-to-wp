@@ -3,7 +3,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use YuzuruS\Wordpress\Post;
 
 // endpoint → example.com
-$wp = new Post(getenv(WP_USERNAME), getenv(WP_PASSWD), getenv(WP_ENDPOINT));
+$wp = new Post(getenv('WP_USERNAME'), getenv('WP_PASSWD'), getenv('WP_ENDPOINT'));
 
 $res = $wp->makeCategories([
     ['name' => 'かて1', 'slug' => 'cate1'],
