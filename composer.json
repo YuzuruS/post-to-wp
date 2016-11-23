@@ -14,7 +14,7 @@
   "require" : {
     "php": ">=5.5.0",
     "ext-xmlrpc": "*",
-    "pear-pear.php.net/XML_RPC": "1.*"
+    "pear-pear.php.net/XML_RPC": "1.5.*"
   },
   "authors": [
     {
