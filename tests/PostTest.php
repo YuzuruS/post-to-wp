@@ -20,7 +20,6 @@ class PostTest extends \PHPUnit_Framework_TestCase
 			['name' => 'かて1', 'slug' => 'cate1'],
 			['name' => 'かて2', 'slug' => 'cate2'],
 		]);
-		var_dump($res);
 		$this->assertTrue($res['status']);
 	}
 
@@ -36,7 +35,6 @@ class PostTest extends \PHPUnit_Framework_TestCase
 			->setWpSlug('entry')
 			->setThumbnail('https://www.pakutaso.com/shared/img/thumb/SAYA160312500I9A3721_TP_V.jpg')
 			->post();
-		var_dump($res);
 		$this->assertTrue($res['status']);
 	}
 
@@ -48,7 +46,6 @@ class PostTest extends \PHPUnit_Framework_TestCase
 			['name' => 'かて1', 'slug' => 'cate1'],
 			['name' => 'かて2', 'slug' => 'cate2'],
 		]);
-		var_dump($res);
 		$this->assertFalse($res['status']);
 	}
 
@@ -65,7 +62,6 @@ class PostTest extends \PHPUnit_Framework_TestCase
 			->setWpSlug('entry')
 			->setThumbnail('https://www.pakutaso.com/shared/img/thumb/SAYA160312500I9A3721_TP_V.jpg')
 			->post();
-var_dump($res);
 		$this->assertFalse($res['status']);
 	}
 
