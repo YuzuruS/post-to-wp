@@ -242,7 +242,7 @@ class Post
 
         if (!empty($this->_thumbnail_url)) {
             $res = $this->_uploadImage($this->_thumbnail_url);
-            if ($res['status'] === false) {
+            if (isset($res['status']) && $res['status'] === false) {
                 return $res;
             }
             $params['wp_post_thumbnail'] = new \XML_RPC_Value($res['id'], 'int');
@@ -288,6 +288,7 @@ class Post
      */
     private function _uploadImage($path, $name = null) {
         $data = file_get_contents($path);
+
         if ($data === false) {
             return [
                 'status' => false,
@@ -298,6 +299,7 @@ class Post
         $info = new \finfo(FILEINFO_MIME_TYPE);
         $mimeType = $info->buffer($data);
         $fileName = $name ? $name : basename($path);
+
         $file = new \XML_RPC_Value(
             [
                 'type' => new \XML_RPC_Value($mimeType, 'string'),

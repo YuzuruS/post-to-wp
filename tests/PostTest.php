@@ -12,7 +12,7 @@ use YuzuruS\Wordpress\Post;
 class PostTest extends \PHPUnit_Framework_TestCase
 {
 
-	public function testPost()
+	public function testMakeCategories()
 	{
 		$wp = new Post(getenv('WP_USERNAME'), getenv('WP_PASSWD'), getenv('WP_ENDPOINT'));
 
@@ -21,7 +21,11 @@ class PostTest extends \PHPUnit_Framework_TestCase
 			['name' => 'かて2', 'slug' => 'cate2'],
 		]);
 		$this->assertTrue($res['status']);
+	}
 
+	public function testPost()
+	{
+		$wp = new Post(getenv('WP_USERNAME'), getenv('WP_PASSWD'), getenv('WP_ENDPOINT'));
 		$res = $wp
 			->setTitle('たいとる')
 			->setDescription('本文')
@@ -29,7 +33,7 @@ class PostTest extends \PHPUnit_Framework_TestCase
 			->setCategories(['かて1','かて2'])
 			->setDate('2016-11-11')
 			->setWpSlug('entry')
-			//->setThumbnail('https://www.pakutaso.com/shared/img/thumb/SAYA160312500I9A3721_TP_V.jpg')
+			->setThumbnail('https://www.pakutaso.com/shared/img/thumb/SAYA160312500I9A3721_TP_V.jpg')
 			->post();
 		$this->assertTrue($res['status']);
 	}
