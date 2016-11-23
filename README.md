@@ -1,4 +1,4 @@
-PHP Wrapping Library to post a article to WordPress with the Thumbnail
+This PHP library can easily post articles to wordpress with its thumbnail
 =============================
 
 [![Coverage Status](https://coveralls.io/repos/github/YuzuruS/post-to-wp/badge.svg?branch=master)](https://coveralls.io/github/YuzuruS/post-to-wp?branch=master)
