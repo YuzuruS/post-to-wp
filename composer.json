@@ -1,6 +1,6 @@
 {
   "name": "yuzuru-s/post-to-wp",
-  "description": "Wrapping Redis's sorted set APIs for specializing recommending operations.",
+  "description": "This PHP library can easily post articles to wordpress with its thumbnail",
   "keywords": ["wordpress", "post", "image"],
   "homepage": "https://github.com/YuzuruS/post-to-wp",
   "type": "library",
