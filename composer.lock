@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "52fc0b75608775814af80fa5865771fb",
-    "content-hash": "6059a84acd8edb4309dbcb23d7d67f0c",
+    "hash": "0b502077d1105273b276b92634dbbf5f",
+    "content-hash": "f0be4ef25a1b46ce34e265d79a6673d8",
     "packages": [
         {
             "name": "pear-pear.php.net/XML_RPC",
