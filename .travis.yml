@@ -9,7 +9,9 @@ before_install:
 before_script:
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install --dev --no-interaction
+  - chmod +x .travis_php.sh
 script:
+  - ./.travis_php.sh
   - php vendor/bin/phpunit -c phpunit.xml.dist
 #  - php coverage-checker.php build/logs/clover.xml 100
 after_script:
