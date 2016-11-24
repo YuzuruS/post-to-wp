@@ -5,6 +5,7 @@ This PHP library can easily post articles to wordpress with its thumbnail
 [![Build Status](https://travis-ci.org/YuzuruS/post-to-wp.png?branch=master)](https://travis-ci.org/YuzuruS/post-to-wp)
 [![Stable Version](https://poser.pugx.org/yuzuru-s/post-to-wp/v/stable)](https://packagist.org/packages/yuzuru-s/post-to-wp)
 [![Download Count](https://poser.pugx.org/yuzuru-s/post-to-wp/downloads.png)](https://packagist.org/packages/yuzuru-s/post-to-wp)
+[![License](https://poser.pugx.org/yuzuru-s/post-to-wp/license)](https://packagist.org/packages/yuzuru-s/post-to-wp)
 
 Requirements
 -----------------------------
