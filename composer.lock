@@ -4,38 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0b502077d1105273b276b92634dbbf5f",
-    "content-hash": "f0be4ef25a1b46ce34e265d79a6673d8",
+    "hash": "6a73a76ce6815001120a8ef25e46494b",
+    "content-hash": "bd69184ff596f7140f4e84761de6e4bb",
     "packages": [
         {
-            "name": "pear-pear.php.net/XML_RPC",
-            "version": "1.5.5",
+            "name": "phpxmlrpc/phpxmlrpc",
+            "version": "4.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/phpxmlrpc.git",
+                "reference": "e7b08a72aecd879884bc85988640cf49302ce041"
+            },
             "dist": {
-                "type": "file",
-                "url": "https://pear.php.net/get/XML_RPC-1.5.5.tgz",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/phpxmlrpc/zipball/e7b08a72aecd879884bc85988640cf49302ce041",
+                "reference": "e7b08a72aecd879884bc85988640cf49302ce041",
+                "shasum": ""
             },
             "require": {
                 "ext-xml": "*",
-                "php": ">=4.2.0.0"
+                "php": ">=5.3.0"
             },
-            "replace": {
-                "pear-pear/xml_rpc": "== 1.5.5.0"
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "docbook/docbook-xsl": "~1.78",
+                "ext-curl": "*",
+                "ext-mbstring": "*",
+                "indeyets/pake": "~1.99",
+                "phpunit/phpunit": ">=4.0.0",
+                "phpunit/phpunit-selenium": "*",
+                "sami/sami": "~3.1"
             },
-            "type": "pear-library",
+            "suggest": {
+                "ext-curl": "Needed for HTTPS and HTTP 1.1 support, NTLM Auth etc...",
+                "ext-mbstring": "Needed to allow reception of requests/responses in character sets other than ASCII,LATIN-1,UTF-8",
+                "ext-zlib": "Needed for sending compressed requests and receiving compressed responses, if cURL is not available"
+            },
+            "type": "library",
             "autoload": {
-                "classmap": [
-                    ""
-                ]
+                "psr-4": {
+                    "PhpXmlRpc\\": "src/"
+                }
             },
-            "include-path": [
-                "/"
-            ],
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "PHP License"
+                "BSD-3-Clause"
             ],
-            "description": "A PEAR-ified version of Useful Inc's XML-RPC for PHP.\n\nIt has support for HTTP/HTTPS transport, proxies and authentication."
+            "description": "A php library for building xmlrpc clients and servers",
+            "homepage": "http://gggeek.github.io/phpxmlrpc/",
+            "keywords": [
+                "webservices",
+                "xmlrpc"
+            ],
+            "time": "2016-10-01 12:29:37"
         }
     ],
     "packages-dev": [

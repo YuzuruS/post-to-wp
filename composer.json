@@ -5,16 +5,10 @@
   "homepage": "https://github.com/YuzuruS/post-to-wp",
   "type": "library",
   "license": "MIT",
-  "repositories" : [
-    {
-      "type" : "pear",
-      "url" : "https://pear.php.net"
-    }
-  ],
   "require" : {
     "php": ">=5.5.0",
     "ext-xmlrpc": "*",
-    "pear-pear.php.net/xml_rpc": "1.5.*"
+    "phpxmlrpc/phpxmlrpc": "*"
   },
   "authors": [
     {

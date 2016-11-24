@@ -1,5 +1,10 @@
 <?php
 namespace YuzuruS\Wordpress;
+use PhpXmlRpc\Client;
+use PhpXmlRpc\Value;
+use PhpXmlRpc\Request;
+use PhpXmlRpc\Encoder;
+
 /**
  * Post
  *
@@ -17,7 +22,7 @@ class Post
     private $_keywords;
     private $_date;
     private $_categories;
-    private $_wp_slug = 'entry_filename';
+    private $_wp_slug;
     private $_thumbnail_url;
     private $_blog_id;
 
@@ -31,10 +36,11 @@ class Post
      */
     public function __construct($username, $password, $endpoint, $port = 80)
     {
-        $this->_client = new \XML_RPC_Client('/xmlrpc.php', $endpoint, $port);
-        $this->_username = new \XML_RPC_Value($username, 'string');
-        $this->_password = new \XML_RPC_Value($password, 'string');
-        $this->_date = new \XML_RPC_Value(time(), 'dateTime.iso8601');
+        $this->_client = new Client('/xmlrpc.php', $endpoint, $port);
+        $this->_username = new Value($username, Value::$xmlrpcString);
+        $this->_password = new Value($password, Value::$xmlrpcString);
+        $this->_date = new Value(time(), Value::$xmlrpcDateTime);
+        $this->_wp_slug = new Value('entry_filename', Value::$xmlrpcString);
     }
 
     /**
@@ -45,7 +51,7 @@ class Post
      */
     public function setTitle($title)
     {
-        $this->_title = new \XML_RPC_Value($title, 'string');
+        $this->_title = new Value($title, Value::$xmlrpcString);
         return $this;
     }
 
@@ -57,7 +63,7 @@ class Post
      */
     public function setDescription($description)
     {
-        $this->_description = new \XML_RPC_Value($description, 'string');
+        $this->_description = new Value($description, Value::$xmlrpcString);
         return $this;
     }
 
@@ -71,14 +77,14 @@ class Post
     {
         if (is_array($keywords)) {
             foreach ($keywords as $keyword) {
-                $this->_keywords[] = new \XML_RPC_Value($keyword, 'string');
+                $this->_keywords[] = new Value($keyword, Value::$xmlrpcString);
             }
         } else {
             $this->_keywords = [
-                new \XML_RPC_Value($keywords, 'string')
+                new Value($keywords, Value::$xmlrpcString)
             ];
         }
-        $this->_keywords = new \XML_RPC_Value($this->_keywords, 'array');
+        $this->_keywords = new Value($this->_keywords, Value::$xmlrpcArray);
         return $this;
     }
 
@@ -92,14 +98,14 @@ class Post
     {
         if (is_array($categories)) {
             foreach ($categories as $category) {
-                $this->_categories[] = new \XML_RPC_Value($category, 'string');
+                $this->_categories[] = new Value($category, Value::$xmlrpcString);
             }
         } else {
             $this->_categories = [
-                new \XML_RPC_Value($categories, 'string')
+                new Value($categories, Value::$xmlrpcString)
             ];
         }
-        $this->_categories = new \XML_RPC_Value($this->_categories, 'array');
+        $this->_categories = new Value($this->_categories, Value::$xmlrpcArray);
         return $this;
     }
 
@@ -120,15 +126,15 @@ class Post
         foreach($categories as $c) {
             $tmp = [];
             foreach ($c as $k => $v) {
-                $tmp[$k] = new \XML_RPC_Value($v, 'string');
+                $tmp[$k] = new Value($v, Value::$xmlrpcString);
             }
-            $message = new \XML_RPC_Message(
+            $message = new Request(
                 'wp.newCategory',
                 [
                     $this->_blog_id,
                     $this->_username,
                     $this->_password,
-                    new \XML_RPC_Value($tmp, 'struct')
+                    new Value($tmp, Value::$xmlrpcStruct)
                 ]
             );
 
@@ -157,7 +163,7 @@ class Post
      */
     public function setDate($date)
     {
-        $this->_date = new \XML_RPC_Value(strtotime($date), '_dateTime.iso8601');
+        $this->_date = new Value(strtotime($date), Value::$xmlrpcDateTime);
         return $this;
     }
 
@@ -169,7 +175,7 @@ class Post
      */
     public function setWpSlug($wp_slug)
     {
-        $this->_wp_slug = $wp_slug;
+        $this->_wp_slug = new Value($wp_slug, Value::$xmlrpcString);
         return $this;
     }
 
@@ -191,10 +197,10 @@ class Post
      * @return array
      */
     private function _getBlogId() {
-        $message = new \XML_RPC_Message(
+        $message = new Request(
             'blogger.getUsersBlogs',
             [
-                new \XML_RPC_Value('', 'string'),
+                new Value('', Value::$xmlrpcString),
                 $this->_username,
                 $this->_password,
             ]
@@ -213,9 +219,9 @@ class Post
                 'msg' => $result->faultString(),
             ];
         }
-
-        $blogs = XML_RPC_decode($result->value());
-        $this->_blog_id = new \XML_RPC_Value($blogs[0]["blogid"], 'string');
+        $xmlrcp_decoder = new Encoder();
+        $blogs = $xmlrcp_decoder->decode($result->value());
+        $this->_blog_id = new Value($blogs[0]["blogid"], Value::$xmlrpcInt);
         return ['status' => true];
     }
 
@@ -245,11 +251,11 @@ class Post
             if (isset($res['status']) && $res['status'] === false) {
                 return $res;
             }
-            $params['wp_post_thumbnail'] = new \XML_RPC_Value($res['id'], 'int');
+            $params['wp_post_thumbnail'] = new Value($res['id'], Value::$xmlrpcInt);
         }
 
-        $content = new \XML_RPC_Value($params, 'struct');
-        $publish = new \XML_RPC_Value(1, "boolean");
+        $content = new Value($params, Value::$xmlrpcStruct);
+        $publish = new Value(1, Value::$xmlrpcBoolean);
 
         if (empty($this->_blog_id)) {
             $res = $this->_getBlogId();
@@ -258,7 +264,7 @@ class Post
             }
         }
 
-        $message = new \XML_RPC_Message(
+        $message = new Request(
             'metaWeblog.newPost',
             [$this->_blog_id, $this->_username, $this->_password, $content, $publish]
         );
@@ -300,18 +306,18 @@ class Post
         $mimeType = $info->buffer($data);
         $fileName = $name ? $name : basename($path);
 
-        $file = new \XML_RPC_Value(
+        $file = new Value(
             [
-                'type' => new \XML_RPC_Value($mimeType, 'string'),
-                'bits' => new \XML_RPC_Value($data, 'base64'),
-                'name' => new \XML_RPC_Value($fileName, 'string')
+                'type' => new Value($mimeType, Value::$xmlrpcString),
+                'bits' => new Value($data, Value::$xmlrpcBase64),
+                'name' => new Value($fileName, Value::$xmlrpcString)
             ],
-            'struct'
+            Value::$xmlrpcStruct
         );
-        $message = new \XML_RPC_Message(
+        $message = new Request(
             'wp.uploadFile',
             [
-                new \XML_RPC_Value(1, 'int'),
+                new Value(1, Value::$xmlrpcInt),
                 $this->_username,
                 $this->_password,
                 $file
@@ -338,6 +344,7 @@ class Post
                 'msg' => $res->faultString(),
             ];
         }
-        return XML_RPC_decode($res->value());
+        $xmlrcp_decoder = new Encoder();
+        return $xmlrcp_decoder->decode($res->value());
     }
 }
